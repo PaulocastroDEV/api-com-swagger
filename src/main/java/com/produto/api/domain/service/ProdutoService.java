@@ -43,7 +43,7 @@ public class ProdutoService {
 		}
 		
 	}
-	@Transactional
+	@Transactional 
 	public void remove(Long id) {
 		
 		try {
