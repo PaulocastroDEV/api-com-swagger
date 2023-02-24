@@ -1,4 +1,4 @@
-package com.produto.api.model;
+package com.produto.api.domain.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
