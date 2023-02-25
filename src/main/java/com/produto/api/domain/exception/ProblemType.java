@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ProblemType {
+	BAD_REQUEST("/bad-request","bad-request"),
 	INVALID_DATA("/dados-invalidos","dados-invalidos"),
 	RESOURCE_NOT_FOUND("/recurso-nao-encontrado","recurso-nao-encontrado");
 	
