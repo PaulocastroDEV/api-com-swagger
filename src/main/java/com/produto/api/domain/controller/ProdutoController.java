@@ -2,6 +2,8 @@ package com.produto.api.domain.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,37 +16,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.produto.api.domain.dto.ProdutoDTO;
+import com.produto.api.domain.dto.ProdutoDTOAssembler;
+import com.produto.api.domain.dto.ProdutoDTODissambler;
+import com.produto.api.domain.dto.ProdutoInputDTO;
 import com.produto.api.domain.model.Produto;
 import com.produto.api.domain.service.ProdutoService;
 
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
-
+	@Autowired
+	private ProdutoDTOAssembler produtoDTOAssembler;
+	
+	@Autowired
+	private ProdutoDTODissambler produtoDTODissambler;
 	
 	@Autowired
 	private ProdutoService produtoService;
 	
 	@GetMapping
-	public List<Produto> findAll(){
-		return produtoService.findAll();
+	public List<ProdutoDTO> findAll(){
+		return produtoDTOAssembler.toCollectionMode( produtoService.findAll());
 	}
 	
 	@PostMapping
-	public Produto create(@RequestBody Produto produto){
-		return produtoService.save(produto);
+	public ResponseEntity<Produto> create(@RequestBody @Valid ProdutoInputDTO produtoInputDTO){
+		Produto produto = produtoDTODissambler.toObjectDomain(produtoInputDTO);
+		produtoService.save(produto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(produto);
 	}
 	@GetMapping("/{id}")
-	public Produto findById(@PathVariable Long id) {
-		return produtoService.findById(id);
+	public ProdutoDTO findById(@PathVariable Long id) {
+		Produto produto = produtoService.findById(id);
+		return produtoDTOAssembler.toModel(produto);
 		
 	}
-	
+	//PAREI AQUI
 	@PutMapping("/{id}")
-	public ResponseEntity<Produto> update(@RequestBody Produto produto, @PathVariable Long id) {
-		Produto newProduto=produtoService.findById(id);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(produtoService.update(produto, id));
+	public ResponseEntity<Produto> update(@RequestBody @Valid ProdutoInputDTO produtoInputDTO, @PathVariable Long id) {
+		Produto produto= produtoDTODissambler.toObjectDomain(produtoInputDTO);
+		produtoService.update(produto, id);
+		return ResponseEntity.status(HttpStatus.OK).body(produto);
 	}
 	
 	@DeleteMapping("/{id}")

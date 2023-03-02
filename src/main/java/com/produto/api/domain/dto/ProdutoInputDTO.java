@@ -1,21 +1,17 @@
-package com.produto.api.domain.model;
+package com.produto.api.domain.dto;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
-@Table
-public class Produto {
+public class ProdutoInputDTO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,5 +24,4 @@ public class Produto {
 	@Column
 	@NotNull
 	private Double valor;
-	
 }
