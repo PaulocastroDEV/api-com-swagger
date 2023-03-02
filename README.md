@@ -22,3 +22,8 @@ Nessa api foi utilizado conhecimentos sobre Data Transfer Object, Rest, Validaç
 	    "descricao": "celular super pontente",
 	    "valor": 5000
 	 }
+	 
+Para iniciar o projeto e preciso clonar o projeto, e ter o java instalado também é preciso ter o lombook.
+
+
+Para acessar a documentação pelo swagger é so acessar a url: http://localhost:8080/swagger-ui.html#
